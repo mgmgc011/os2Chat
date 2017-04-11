@@ -37,17 +37,18 @@ class LoginRegisterCell: UITableViewCell, UITextFieldDelegate {
     
     let label: UILabel = {
         let lb = UILabel()
-        lb.text = "Sample"
         lb.translatesAutoresizingMaskIntoConstraints = false
         lb.backgroundColor = UIColor.white
         lb.textColor = UIColor.black
+        lb.textAlignment = .center
         return lb
     }()
     
     lazy var inputTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "placeHolderSample"
+        tf.placeholder = "enter here"
         tf.font = UIFont.systemFont(ofSize: 14)
+        tf.textAlignment = .center
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.delegate = self
         return tf
@@ -55,7 +56,9 @@ class LoginRegisterCell: UITableViewCell, UITextFieldDelegate {
     
     
     
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return true
+    }
     
     
     
@@ -69,26 +72,28 @@ extension LoginRegisterController {
     
     static let barButtonColor = UIColor(r: 247, g: 167, b: 0)
     
+    
+    
     func setUpNavigationBar() {
         navigationItem.title = "OraChat"
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.isTranslucent = false
-        
     }
     
     func setUpInitialNavBarItems() {
-        let switchButton = UIButton(type: .system)
         switchButton.setTitle("Register", for: .normal)
         switchButton.setTitleColor(LoginRegisterController.barButtonColor, for: .normal)
         switchButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         switchButton.sizeToFit()
+        switchButton.addTarget(self, action: #selector(action_loginRegisterState), for: .touchUpInside)
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: switchButton)
         
-        let actionButton = UIButton(type: .system)
         actionButton.setTitle("Login", for: .normal)
         actionButton.setTitleColor(LoginRegisterController.barButtonColor, for: .normal)
         actionButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         actionButton.sizeToFit()
+        actionButton.addTarget(self, action: #selector(action_loginRegisterAttempt), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
     }
     

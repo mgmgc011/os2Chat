@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.rootViewController = UINavigationController(rootViewController: LoginRegisterController())
         
+        UITabBar.appearance().tintColor = UIColor(r: 247, g: 167, b: 0)
+        
         
         return true
     }
