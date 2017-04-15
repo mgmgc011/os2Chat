@@ -9,46 +9,27 @@
 import UIKit
 
 
-class ChatListTableView: UIView, UITableViewDelegate, UITableViewDataSource {
+class ChatListTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     let cellId = "cellId"
     let headerId = "headerId"
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+
+    
+    override init(frame: CGRect, style: UITableViewStyle) {
+        super.init(frame: frame, style: style)
         
-        
-        tableView.register(ChatListCell.self, forCellReuseIdentifier: cellId)
-        tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: headerId)
-        tableView.separatorColor = .clear
-        
-        addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        tableView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        tableView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
-        tableView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        
-        
-        
-        
+        self.register(ChatListCell.self, forCellReuseIdentifier: cellId)
+        self.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: headerId)
+        self.separatorColor = .clear
+        self.delegate = self
+        self.dataSource = self
         
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        return tableView
-    }()
-    
-    
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

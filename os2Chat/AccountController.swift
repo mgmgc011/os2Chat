@@ -10,6 +10,11 @@ import UIKit
 
 
 class AccountController: UITableViewController {
+    
+    let registerLabels = ["Name","Email", "Password", "Confirm"]
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "OraChat"

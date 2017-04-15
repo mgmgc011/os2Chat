@@ -9,7 +9,7 @@
 import UIKit
 
 
-class LoginRegisterCell: UITableViewCell, UITextFieldDelegate {
+class AccountCell: UITableViewCell, UITextFieldDelegate {
     
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -82,8 +82,9 @@ extension LoginRegisterController {
         switchButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         switchButton.sizeToFit()
         switchButton.addTarget(self, action: #selector(action_loginRegisterState), for: .touchUpInside)
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: switchButton)
+        
+        
         
         actionButton.setTitle("Login", for: .normal)
         actionButton.setTitleColor(UIColor.oraColor(), for: .normal)

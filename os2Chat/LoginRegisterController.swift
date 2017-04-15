@@ -24,7 +24,7 @@ class LoginRegisterController: UITableViewController, UINavigationControllerDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(LoginRegisterCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(AccountCell.self, forCellReuseIdentifier: cellId)
         
         
         
@@ -42,7 +42,7 @@ class LoginRegisterController: UITableViewController, UINavigationControllerDele
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! LoginRegisterCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! AccountCell
         let switchButtonState = switchButton.currentTitle == "Register" ? registerLabels : loginLabels
         let labels = switchButtonState[indexPath.row]
         cell.inputTextField.text = ""

@@ -15,6 +15,8 @@
 		7B2A1A421E9C251F00173E87 /* os2ChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A1A411E9C251F00173E87 /* os2ChatTests.swift */; };
 		7B4DE7A31E9EF54C009CE2BF /* ChatListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DE7A21E9EF54C009CE2BF /* ChatListTableView.swift */; };
 		7B4DE7A51EA18014009CE2BF /* AddButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DE7A41EA18014009CE2BF /* AddButtonView.swift */; };
+		7B4DE7A71EA2B624009CE2BF /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DE7A61EA2B624009CE2BF /* ChatLogController.swift */; };
+		7B4DE7A91EA2BB6E009CE2BF /* ChatLogCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DE7A81EA2BB6E009CE2BF /* ChatLogCollectionView.swift */; };
 		7BEEF4791E9C543B00580B18 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEF4781E9C543B00580B18 /* UIColor.swift */; };
 		7BEEF47B1E9C544600580B18 /* LoginRegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEF47A1E9C544600580B18 /* LoginRegisterCell.swift */; };
 		7BEEF47D1E9C9B1F00580B18 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEF47C1E9C9B1F00580B18 /* CustomTabBarController.swift */; };
@@ -50,6 +52,8 @@
 		7B2A1A431E9C251F00173E87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B4DE7A21E9EF54C009CE2BF /* ChatListTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatListTableView.swift; path = os2Chat/ChatListTableView.swift; sourceTree = "<group>"; };
 		7B4DE7A41EA18014009CE2BF /* AddButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddButtonView.swift; path = os2Chat/AddButtonView.swift; sourceTree = "<group>"; };
+		7B4DE7A61EA2B624009CE2BF /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
+		7B4DE7A81EA2BB6E009CE2BF /* ChatLogCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatLogCollectionView.swift; path = os2Chat/ChatLogCollectionView.swift; sourceTree = "<group>"; };
 		7BEEF4781E9C543B00580B18 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = os2Chat/UIColor.swift; sourceTree = "<group>"; };
 		7BEEF47A1E9C544600580B18 /* LoginRegisterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginRegisterCell.swift; path = os2Chat/LoginRegisterCell.swift; sourceTree = "<group>"; };
 		7BEEF47C1E9C9B1F00580B18 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
@@ -142,6 +146,7 @@
 				7BEEF4821E9CAA3900580B18 /* ChatListCell.swift */,
 				7B4DE7A21E9EF54C009CE2BF /* ChatListTableView.swift */,
 				7B4DE7A41EA18014009CE2BF /* AddButtonView.swift */,
+				7B4DE7A81EA2BB6E009CE2BF /* ChatLogCollectionView.swift */,
 			);
 			name = View;
 			path = ..;
@@ -154,6 +159,7 @@
 				7BEEF47C1E9C9B1F00580B18 /* CustomTabBarController.swift */,
 				7BEEF47E1E9C9BB100580B18 /* ChatListController.swift */,
 				7BEEF4801E9CA2C900580B18 /* AccountController.swift */,
+				7B4DE7A61EA2B624009CE2BF /* ChatLogController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -385,8 +391,10 @@
 				7BEEF4811E9CA2C900580B18 /* AccountController.swift in Sources */,
 				7BEEF4831E9CAA3900580B18 /* ChatListCell.swift in Sources */,
 				7B4DE7A31E9EF54C009CE2BF /* ChatListTableView.swift in Sources */,
+				7B4DE7A91EA2BB6E009CE2BF /* ChatLogCollectionView.swift in Sources */,
 				7B2A1A2F1E9C251F00173E87 /* LoginRegisterController.swift in Sources */,
 				7BEEF47F1E9C9BB100580B18 /* ChatListController.swift in Sources */,
+				7B4DE7A71EA2B624009CE2BF /* ChatLogController.swift in Sources */,
 				7B2A1A2D1E9C251F00173E87 /* AppDelegate.swift in Sources */,
 				7BEEF47D1E9C9B1F00580B18 /* CustomTabBarController.swift in Sources */,
 				7BEEF47B1E9C544600580B18 /* LoginRegisterCell.swift in Sources */,

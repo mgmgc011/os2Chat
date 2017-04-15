@@ -20,8 +20,6 @@ class ChatListController: UIViewController {
         navigationItem.title = "OraChat"
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.isTranslucent = false
-
-        
         
         view.addSubview(inputSearchBarView)
         inputSearchBarView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
@@ -34,7 +32,6 @@ class ChatListController: UIViewController {
         inputTableView.widthAnchor.constraint(equalToConstant: self.view.frame.size.width).isActive = true
         inputTableView.heightAnchor.constraint(equalToConstant: self.view.frame.size.height - inputSearchBarView.frame.size.height).isActive = true
 
-        
         view.addSubview(addButton)
         addButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant : -12).isActive = true
         addButton.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -12).isActive = true
@@ -44,11 +41,12 @@ class ChatListController: UIViewController {
         
     }
     
-
+    
     
     
     lazy var inputTableView: ChatListTableView = {
-        let tableView = ChatListTableView(frame: .zero)
+//        let tableView = ChatListTableView(frame: .zero)
+        let tableView = ChatListTableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
