@@ -12,9 +12,6 @@ import UIKit
 class LoginRegisterCell: UITableViewCell, UITextFieldDelegate {
     
     
-    
-    
-    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
@@ -70,7 +67,6 @@ class LoginRegisterCell: UITableViewCell, UITextFieldDelegate {
 extension LoginRegisterController {
     
     
-    static let barButtonColor = UIColor(r: 247, g: 167, b: 0)
     
     
     
@@ -82,7 +78,7 @@ extension LoginRegisterController {
     
     func setUpInitialNavBarItems() {
         switchButton.setTitle("Register", for: .normal)
-        switchButton.setTitleColor(LoginRegisterController.barButtonColor, for: .normal)
+        switchButton.setTitleColor(UIColor.oraColor(), for: .normal)
         switchButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         switchButton.sizeToFit()
         switchButton.addTarget(self, action: #selector(action_loginRegisterState), for: .touchUpInside)
@@ -90,7 +86,7 @@ extension LoginRegisterController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: switchButton)
         
         actionButton.setTitle("Login", for: .normal)
-        actionButton.setTitleColor(LoginRegisterController.barButtonColor, for: .normal)
+        actionButton.setTitleColor(UIColor.oraColor(), for: .normal)
         actionButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         actionButton.sizeToFit()
         actionButton.addTarget(self, action: #selector(action_loginRegisterAttempt), for: .touchUpInside)

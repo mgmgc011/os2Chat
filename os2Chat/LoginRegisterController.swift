@@ -26,6 +26,8 @@ class LoginRegisterController: UITableViewController, UINavigationControllerDele
         
         tableView.register(LoginRegisterCell.self, forCellReuseIdentifier: cellId)
         
+        
+        
         setUpNavigationBar()
         setUpInitialNavBarItems()
         
@@ -34,7 +36,6 @@ class LoginRegisterController: UITableViewController, UINavigationControllerDele
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let switchButtonState = switchButton.currentTitle == "Register" ? registerLabels.count : loginLabels.count
-        
         
         
         return switchButtonState

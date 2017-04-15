@@ -12,7 +12,8 @@ import UIKit
 class AccountController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationItem.title = "OraChat"
+
         print("AccountController loaded!")
     }
 }

@@ -13,7 +13,7 @@ class CustomTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let chatListController = ChatListController(collectionViewLayout: UICollectionViewFlowLayout())
+        let chatListController = ChatListController()
         let chatNavigationController = UINavigationController(rootViewController: chatListController)
         chatNavigationController.title = "Chat"
         chatNavigationController.tabBarItem.image = UIImage(named: "icon_ios_list")
