@@ -17,12 +17,14 @@
 		7B4DE7A51EA18014009CE2BF /* AddButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DE7A41EA18014009CE2BF /* AddButtonView.swift */; };
 		7B4DE7A71EA2B624009CE2BF /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DE7A61EA2B624009CE2BF /* ChatLogController.swift */; };
 		7B4DE7A91EA2BB6E009CE2BF /* ChatLogCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DE7A81EA2BB6E009CE2BF /* ChatLogCollectionView.swift */; };
+		7BC54EA21EA96F850084A42F /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC54EA11EA96F850084A42F /* PopUpView.swift */; };
+		7BC54EA41EADED3C0084A42F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC54EA31EADED3C0084A42F /* APIManager.swift */; };
 		7BEEF4791E9C543B00580B18 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEF4781E9C543B00580B18 /* UIColor.swift */; };
 		7BEEF47B1E9C544600580B18 /* LoginRegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEF47A1E9C544600580B18 /* LoginRegisterCell.swift */; };
 		7BEEF47D1E9C9B1F00580B18 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEF47C1E9C9B1F00580B18 /* CustomTabBarController.swift */; };
 		7BEEF47F1E9C9BB100580B18 /* ChatListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEF47E1E9C9BB100580B18 /* ChatListController.swift */; };
 		7BEEF4811E9CA2C900580B18 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEF4801E9CA2C900580B18 /* AccountController.swift */; };
-		7BEEF4831E9CAA3900580B18 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEF4821E9CAA3900580B18 /* ChatListCell.swift */; };
+		7BEEF4831E9CAA3900580B18 /* ChatLogCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEEF4821E9CAA3900580B18 /* ChatLogCollectionCell.swift */; };
 		938E5FCA6EDDE8AF8AECF0DF /* Pods_os2Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8823402FC467922051186B10 /* Pods_os2Chat.framework */; };
 		C2CCA7BA617C11048E2008C6 /* Pods_os2ChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0AD9EFCE021BBCF1809E026 /* Pods_os2ChatTests.framework */; };
 /* End PBXBuildFile section */
@@ -54,12 +56,14 @@
 		7B4DE7A41EA18014009CE2BF /* AddButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddButtonView.swift; path = os2Chat/AddButtonView.swift; sourceTree = "<group>"; };
 		7B4DE7A61EA2B624009CE2BF /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		7B4DE7A81EA2BB6E009CE2BF /* ChatLogCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatLogCollectionView.swift; path = os2Chat/ChatLogCollectionView.swift; sourceTree = "<group>"; };
+		7BC54EA11EA96F850084A42F /* PopUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopUpView.swift; path = os2Chat/PopUpView.swift; sourceTree = "<group>"; };
+		7BC54EA31EADED3C0084A42F /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIManager.swift; path = os2Chat/APIManager.swift; sourceTree = "<group>"; };
 		7BEEF4781E9C543B00580B18 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = os2Chat/UIColor.swift; sourceTree = "<group>"; };
 		7BEEF47A1E9C544600580B18 /* LoginRegisterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginRegisterCell.swift; path = os2Chat/LoginRegisterCell.swift; sourceTree = "<group>"; };
 		7BEEF47C1E9C9B1F00580B18 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		7BEEF47E1E9C9BB100580B18 /* ChatListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListController.swift; sourceTree = "<group>"; };
 		7BEEF4801E9CA2C900580B18 /* AccountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountController.swift; sourceTree = "<group>"; };
-		7BEEF4821E9CAA3900580B18 /* ChatListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatListCell.swift; path = os2Chat/ChatListCell.swift; sourceTree = "<group>"; };
+		7BEEF4821E9CAA3900580B18 /* ChatLogCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatLogCollectionCell.swift; path = os2Chat/ChatLogCollectionCell.swift; sourceTree = "<group>"; };
 		8823402FC467922051186B10 /* Pods_os2Chat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_os2Chat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4A0508D0073AFDCCE194886 /* Pods-os2Chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-os2Chat.release.xcconfig"; path = "Pods/Target Support Files/Pods-os2Chat/Pods-os2Chat.release.xcconfig"; sourceTree = "<group>"; };
 		D0FD42330464A603AEAAE46C /* Pods-os2ChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-os2ChatTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-os2ChatTests/Pods-os2ChatTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				7BEEF4781E9C543B00580B18 /* UIColor.swift */,
+				7BC54EA31EADED3C0084A42F /* APIManager.swift */,
 			);
 			name = Model;
 			path = ..;
@@ -143,8 +148,9 @@
 			isa = PBXGroup;
 			children = (
 				7BEEF47A1E9C544600580B18 /* LoginRegisterCell.swift */,
-				7BEEF4821E9CAA3900580B18 /* ChatListCell.swift */,
+				7BEEF4821E9CAA3900580B18 /* ChatLogCollectionCell.swift */,
 				7B4DE7A21E9EF54C009CE2BF /* ChatListTableView.swift */,
+				7BC54EA11EA96F850084A42F /* PopUpView.swift */,
 				7B4DE7A41EA18014009CE2BF /* AddButtonView.swift */,
 				7B4DE7A81EA2BB6E009CE2BF /* ChatLogCollectionView.swift */,
 			);
@@ -389,10 +395,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BEEF4811E9CA2C900580B18 /* AccountController.swift in Sources */,
-				7BEEF4831E9CAA3900580B18 /* ChatListCell.swift in Sources */,
+				7BEEF4831E9CAA3900580B18 /* ChatLogCollectionCell.swift in Sources */,
 				7B4DE7A31E9EF54C009CE2BF /* ChatListTableView.swift in Sources */,
 				7B4DE7A91EA2BB6E009CE2BF /* ChatLogCollectionView.swift in Sources */,
 				7B2A1A2F1E9C251F00173E87 /* LoginRegisterController.swift in Sources */,
+				7BC54EA21EA96F850084A42F /* PopUpView.swift in Sources */,
+				7BC54EA41EADED3C0084A42F /* APIManager.swift in Sources */,
 				7BEEF47F1E9C9BB100580B18 /* ChatListController.swift in Sources */,
 				7B4DE7A71EA2B624009CE2BF /* ChatLogController.swift in Sources */,
 				7B2A1A2D1E9C251F00173E87 /* AppDelegate.swift in Sources */,

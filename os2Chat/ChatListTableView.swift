@@ -9,11 +9,17 @@
 import UIKit
 
 
-class ChatListTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
+class ChatListTableView: UITableView, UITableViewDataSource, UITableViewDelegate {
     
     let cellId = "cellId"
     let headerId = "headerId"
     
+    var chatListController: ChatListController? {
+        didSet {
+//            tableView(self, didSelectRowAt: self.indexPathForSelectedRow!)
+//            print(self.indexPathForSelectedRow!)
+        }
+    }
 
     
     override init(frame: CGRect, style: UITableViewStyle) {
@@ -37,6 +43,8 @@ class ChatListTableView: UITableView, UITableViewDelegate, UITableViewDataSource
         cell.textLabel?.text = "From Bella"
         cell.detailTextLabel?.text = "Time ago"
         cell.messageLabel.text = "Yo YO yo yO"
+
+        
         
         
         return cell
@@ -48,6 +56,10 @@ class ChatListTableView: UITableView, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
     
     
@@ -76,18 +88,77 @@ class ChatListTableView: UITableView, UITableViewDelegate, UITableViewDataSource
     
 }
 
-extension UIView {
-    func addConstraintsWithFormat(_ format: String, views: UIView...) {
-        var viewsDictionary = [String: UIView]()
-        for (index, view) in views.enumerated() {
-            let key = "v\(index)"
-            view.translatesAutoresizingMaskIntoConstraints = false
-            viewsDictionary[key] = view
-        }
+class ChatListCell: UITableViewCell {
+    
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
+        detailTextLabel?.textColor = UIColor.oraColor()
+        
+        
+        
+        addSubview(messageLabel)
+        messageLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: detailTextLabel!.bottomAnchor, constant: 0).isActive = true
+        messageLabel.widthAnchor.constraint(equalTo: textLabel!.widthAnchor).isActive = true
+        messageLabel.heightAnchor.constraint(equalTo: textLabel!.heightAnchor).isActive = true
+        
+        
+        
     }
+    
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        textLabel?.frame = CGRect(x: 20, y: textLabel!.frame.origin.y - 14, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        detailTextLabel?.frame = CGRect(x: 24, y: detailTextLabel!.frame.origin.y - 12, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
+        
+        
+    }
+    
+    let messageLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.textColor = UIColor.darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
 }
+
+
+
+
+
+
+class SearchBarView: UISearchBar {
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        
+        
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    
+}
+
+
+
 
 
 
