@@ -43,9 +43,6 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         navigationItem.title = "OraChat"
-        navigationController?.navigationBar.backgroundColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-        
         
         tableView.register(ChatListCell.self, forCellReuseIdentifier: cellId)
         tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: headerId)
@@ -107,12 +104,9 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let chatLogController = ChatLogController()
-//        let navController = UINavigationController(rootViewController: chatLogController)
-//        self.present(navController, animated: true, completion: nil)
-        
+
         self.navigationController?.pushViewController(chatLogController, animated: true)
-        
-//        present(navController, animated: true, completion: nil)
+    
     }
     
     

@@ -64,39 +64,4 @@ class AccountCell: UITableViewCell, UITextFieldDelegate {
 }
 
 
-extension LoginRegisterController {
-    
-    
-    
-    
-    
-    func setUpNavigationBar() {
-        navigationItem.title = "OraChat"
-        navigationController?.navigationBar.backgroundColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-    }
-    
-    func setUpInitialNavBarItems() {
-        switchButton.setTitle("Register", for: .normal)
-        switchButton.setTitleColor(UIColor.oraColor(), for: .normal)
-        switchButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        switchButton.sizeToFit()
-        switchButton.addTarget(self, action: #selector(action_loginRegisterState), for: .touchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: switchButton)
-        
-        
-        
-        actionButton.setTitle("Login", for: .normal)
-        actionButton.setTitleColor(UIColor.oraColor(), for: .normal)
-        actionButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        actionButton.sizeToFit()
-        actionButton.addTarget(self, action: #selector(action_loginRegisterAttempt), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
-    }
-    
-    
-    
-    
-    
-    
-}
+

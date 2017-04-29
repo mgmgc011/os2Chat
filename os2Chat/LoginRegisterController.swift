@@ -9,72 +9,135 @@
 import UIKit
 
 
-class LoginRegisterController: UITableViewController, UINavigationControllerDelegate {
+class LoginRegisterController: UITableViewController, UINavigationControllerDelegate, UITextFieldDelegate {
     
     let cellId = "cellId"
     let loginLabels = ["Email", "Password"]
     let registerLabels = ["Name","Email", "Password", "Confirm"]
+    let register = "Register"
+    let login = "Login"
     
-    let switchButton = UIButton(type: .system)
-    let actionButton = UIButton(type: .system)
+    var nameTF: UITextField?
+    var emailTF: UITextField?
+    var passwordTF: UITextField?
+    var confirmTF: UITextField?
     
+    var nameText: String?
+    var emailText: String?
+    var passwordText: String?
+    var confirmText: String?
     
+    lazy var switchButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Register", for: .normal)
+        button.setTitleColor(UIColor.oraColor(), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        button.sizeToFit()
+        button.addTarget(self, action: #selector(action_loginRegisterState), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var actionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Login", for: .normal)
+        button.setTitleColor(UIColor.oraColor(), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        button.sizeToFit()
+        button.addTarget(self, action: #selector(action_loginRegisterAttempt), for: .touchUpInside)
+        return button
+    }()
+    
+    let apiManager = APIManager.sharedInstance
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "OraChat"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: switchButton)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
         tableView.register(AccountCell.self, forCellReuseIdentifier: cellId)
-        
-        
-        
-        setUpNavigationBar()
-        setUpInitialNavBarItems()
+
         
     }
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let switchButtonState = switchButton.currentTitle == "Register" ? registerLabels.count : loginLabels.count
-        
-        
+        let switchButtonState = switchButton.currentTitle == register ? loginLabels.count : registerLabels.count
         return switchButtonState
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! AccountCell
-        let switchButtonState = switchButton.currentTitle == "Register" ? registerLabels : loginLabels
+        let switchButtonState = switchButton.currentTitle == register ? loginLabels : registerLabels
         let labels = switchButtonState[indexPath.row]
-        cell.inputTextField.text = ""
         cell.label.text = labels
         
-        if cell.label.text == "Password" || cell.label.text == "Confirm" {
-            cell.inputTextField.isSecureTextEntry = true
-        } else {
+        switch cell.label.text! {
+        case "Name":
+            nameTF = cell.inputTextField
+        case "Email":
+            emailTF = cell.inputTextField
             cell.inputTextField.isSecureTextEntry = false
+        case "Password":
+            passwordTF = cell.inputTextField
+            cell.inputTextField.isSecureTextEntry = true
+        case "Confirm":
+            confirmTF = cell.inputTextField
+            cell.inputTextField.isSecureTextEntry = true
+        default: break
         }
         
         return cell
     }
     
+    func syncInputText() {
+        nameText = nameTF?.text
+        emailText = emailTF?.text
+        passwordText = passwordTF?.text
+        confirmText = confirmTF?.text
+    }
     
     
     func action_loginRegisterState() {
-        let switchButtonTitle = switchButton.currentTitle == "Register" ? "Login" : "Register"
-        let actionButtonTitle = actionButton.currentTitle == "Login" ? "Register" : "Login"
+        let switchButtonTitle = switchButton.currentTitle == register ? login : register
+        let actionButtonTitle = actionButton.currentTitle == login ? register : login
         
-        switchButton.setTitle(switchButtonTitle, for: .normal)
-        actionButton.setTitle(actionButtonTitle, for: .normal)
-        actionButton.sizeToFit()
+        self.switchButton.setTitle(switchButtonTitle, for: .normal)
+        self.actionButton.setTitle(actionButtonTitle, for: .normal)
+        self.actionButton.sizeToFit()
         
         self.tableView.reloadData()
-        
     }
     
     func action_loginRegisterAttempt() {
-        
+        syncInputText()
+        let titleLabel = actionButton.titleLabel?.text
         let tabBarController = CustomTabBarController()
-        present(tabBarController, animated: true, completion: nil)
+        
+        
+        switch titleLabel! {
+        case register:
+            apiManager.register(name: nameText!, email: emailText!, pw: passwordText!, confirmPw: confirmText!) { (result, message) in
+                print(result)
+                print(message)
+            }
+            
+        case login:
+            apiManager.login(email: emailText!, pw: passwordText!, completion: { (result, message) in
+                print(result)
+                print(message)
+                if result == true {
+                    self.present(tabBarController, animated: true, completion: nil)
+                }
+                
+            })
+            
+        default: break
+        }
+        
+        
+        
         
         
     }

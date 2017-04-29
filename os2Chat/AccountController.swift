@@ -14,7 +14,17 @@ class AccountController: UITableViewController {
     let registerLabels = ["Name","Email", "Password", "Confirm"]
     let cellId = "cellId"
     
+    var nameTF: UITextField?
+    var emailTF: UITextField?
+    var passwordTF: UITextField?
+    var confirmTF: UITextField?
     
+    var nameText: String?
+    var emailText: String?
+    var passwordText: String?
+    var confirmText: String?
+    
+    let apiManager = APIManager.sharedInstance
     
     
     lazy var saveButton: UIButton = {
@@ -23,7 +33,18 @@ class AccountController: UITableViewController {
         button.setTitleColor(UIColor.oraColor(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         button.sizeToFit()
-//        button.addTarget(self, action: #selector(backAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(saveUserInfo), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    lazy var logoutButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Logout", for: .normal)
+        button.setTitleColor(UIColor.oraColor(), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.sizeToFit()
+        button.addTarget(self, action: #selector(logoutUser), for: .touchUpInside)
         return button
     }()
     
@@ -34,12 +55,13 @@ class AccountController: UITableViewController {
 
         print("AccountController loaded!")
         
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.register(AccountCell.self, forCellReuseIdentifier: cellId)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
-
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logoutButton)
         
+        apiManager.readCurrentUser { (user) -> (Void) in
+            
+        }
     }
     
     
@@ -59,8 +81,31 @@ class AccountController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return registerLabels.count
     }
     
+    func syncInputText() {
+        nameText = nameTF?.text
+        emailText = emailTF?.text
+        passwordText = passwordTF?.text
+        confirmText = confirmTF?.text
+    }
+    
+    
+    func saveUserInfo() {
+        syncInputText()
+        
+        
+    }
+    
+    func logoutUser() {
+        apiManager.logout { (result) in
+            if result == true {
+                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+                
+                
+            }
+        }
+    }
     
 }
