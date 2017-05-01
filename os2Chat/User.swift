@@ -12,12 +12,12 @@ import SwiftyJSON
 
 
 struct User {
-    var id: Int?
+    var id: NSNumber?
     var name: String?
     var email: String?
 
     init(json: JSON) {
-        id = json["id"].int
+        id = json["id"].number
         name = json["name"].string
         email = json["email"].string
     

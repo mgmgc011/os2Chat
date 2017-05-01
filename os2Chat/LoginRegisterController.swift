@@ -52,13 +52,10 @@ class LoginRegisterController: UITableViewController, UINavigationControllerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.title = "OraChat"
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: switchButton)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
         tableView.register(AccountCell.self, forCellReuseIdentifier: cellId)
-
-        
     }
     
     
@@ -115,18 +112,25 @@ class LoginRegisterController: UITableViewController, UINavigationControllerDele
         let titleLabel = actionButton.titleLabel?.text
         let tabBarController = CustomTabBarController()
         
-        
         switch titleLabel! {
         case register:
             apiManager.register(name: nameText!, email: emailText!, pw: passwordText!, confirmPw: confirmText!) { (result, message) in
-                print(result)
-                print(message)
+                
+                if result == true {
+                    let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: { (action) in
+                        self.action_loginRegisterState()
+                    })
+                    self.errorAlert(message, message: "Please sign in", action: action)
+                } else {
+                    let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil)
+                    self.errorAlert("Register Failed", message: "Please Try Again", action: action)
+                }
+                
             }
             
         case login:
             apiManager.login(email: emailText!, pw: passwordText!, completion: { (result, message) in
-                print(result)
-                print(message)
+                
                 if result == true {
                     self.present(tabBarController, animated: true, completion: nil)
                 }
@@ -135,15 +139,14 @@ class LoginRegisterController: UITableViewController, UINavigationControllerDele
             
         default: break
         }
-        
-        
-        
-        
-        
     }
     
     
-    
+    func errorAlert(_ title: String, message: String, action: UIAlertAction) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
     
     
     

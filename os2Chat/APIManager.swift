@@ -16,13 +16,11 @@ class APIManager {
     static let sharedInstance = APIManager()
     
     let baseUrl = "https://private-93240c-oracodechallenge.apiary-mock.com/"
-    
     let contentType = ["Content-Type": "application/json; charset-UTF-8"]
     let contAuthHeader = ["Content-Type": "application/json; charset-UTF-8", "Authorization": "Bearer BBJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"]
     
     
     func register(name: String, email: String, pw: String, confirmPw: String, completion: @escaping (Bool, String) -> ()) {
-        
         let headers: HTTPHeaders = contentType
         let paramters = ["name": name, "email": email, "password":pw, "confirm": confirmPw]
         
@@ -49,7 +47,6 @@ class APIManager {
     
     
     func login(email: String, pw: String, completion: @escaping (Bool, String) -> ()) {
-        
         let headers: HTTPHeaders = contentType
         let parameters = ["email": email, "password": pw]
         
@@ -79,6 +76,7 @@ class APIManager {
     
     func logout(completion: @escaping (Bool) -> ()) {
         let headers: HTTPHeaders = contAuthHeader
+        
         Alamofire.request(baseUrl.appending("auth/logout"), method: .get, headers: headers).responseData { (response) in
             switch response.result {
             case .success:
@@ -93,7 +91,6 @@ class APIManager {
     
     
     func readCurrentUser(completion: @escaping (User?) -> (Void)) {
-        
         let headers: HTTPHeaders = contAuthHeader
         
         Alamofire.request(baseUrl.appending("users/current"), method: .get, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
@@ -102,14 +99,40 @@ class APIManager {
                 let value = JSON(value)
                 let data = value["data"]
                 let user = User(json: data)
-                print(user)
                 completion(user)
             case .failure:
-                
                 return
             }
         }
     }
+    
+    func updateCurrentUser(name: String, email: String, pw: String, confirmPw: String, completion: @escaping (Bool, String) -> ()) {
+        let headers: HTTPHeaders = contentType
+        let paramters = ["name": name, "email": email, "password":pw, "confirm": confirmPw]
+        
+        Alamofire.request(baseUrl.appending("users/current"), method: .patch, parameters: paramters, encoding: URLEncoding.httpBody, headers: headers).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                let jsonValue = JSON(value)
+                if let id = jsonValue["data"]["id"].int {
+                    guard id == 1 else {
+                        completion(false, "Update Error")
+                        return
+                    }
+                    completion(true, "Sucessfully Updated")
+                    return
+                }
+                completion(false, "Update Error")
+                
+            case .failure:
+                completion(false, "Request Error")
+                
+            }
+        }
+    }
+    
+    
+    
     
     
     

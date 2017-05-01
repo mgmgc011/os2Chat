@@ -23,7 +23,6 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     }()
     
     lazy var inputSearchBarView: SearchBarView = {
-        
         let searchBarView = SearchBarView(frame: .zero)
         searchBarView.translatesAutoresizingMaskIntoConstraints = false
         return searchBarView
@@ -41,9 +40,8 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         navigationItem.title = "OraChat"
-        
+        navigationController?.navigationBar.barTintColor = .white
         tableView.register(ChatListCell.self, forCellReuseIdentifier: cellId)
         tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: headerId)
 
