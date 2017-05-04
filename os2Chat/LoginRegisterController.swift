@@ -56,6 +56,8 @@ class LoginRegisterController: UITableViewController, UINavigationControllerDele
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: switchButton)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
         tableView.register(AccountCell.self, forCellReuseIdentifier: cellId)
+        
+        
     }
     
     
@@ -105,7 +107,10 @@ class LoginRegisterController: UITableViewController, UINavigationControllerDele
         self.actionButton.sizeToFit()
         
         self.tableView.reloadData()
+        
     }
+    
+    
     
     func action_loginRegisterAttempt() {
         syncInputText()
@@ -114,6 +119,9 @@ class LoginRegisterController: UITableViewController, UINavigationControllerDele
         
         switch titleLabel! {
         case register:
+            
+
+            
             apiManager.register(name: nameText!, email: emailText!, pw: passwordText!, confirmPw: confirmText!) { (result, message) in
                 
                 if result == true {

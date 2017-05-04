@@ -22,7 +22,8 @@ class AddButtonView: UIButton {
         
         self.contentHorizontalAlignment = UIControlContentHorizontalAlignment.fill
         self.contentVerticalAlignment = UIControlContentVerticalAlignment.fill
-
+        
+        self.layer.cornerRadius = 25
         
     }
     

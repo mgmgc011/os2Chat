@@ -15,6 +15,7 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
     
     let cellId = "cellId"
     
+    var message: Message?
     
     let messages = ["Hi", "This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice", "This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice, This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice", "This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice, This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz niceThis is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice, This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz niceThis is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice, This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz niceThis is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice, This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice"]
     
@@ -51,7 +52,9 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
     lazy var popupView: PopUpView = {
         let width = self.view.frame.width * 0.7
         let height = self.view.frame.height * 0.5
-        let popUp = PopUpView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        let frame = CGRect(x: 0, y: 0, width: width, height: height)
+        let popUp = PopUpView(frame: frame, actionButtonTitle: "Send", labelText: "Send A Message", parentViewController: 2)
+//        let popUp = PopUpView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         let navbarY = self.navigationController?.navigationBar.frame.height
         let tabbarY = self.tabBarController?.tabBar.frame.height
         let x = self.view.center.x
@@ -82,7 +85,6 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
         addButton.addTarget(self, action: #selector(addPopUp), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
 
-        
     }
     
     

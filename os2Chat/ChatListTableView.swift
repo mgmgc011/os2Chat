@@ -22,7 +22,7 @@ class ChatListCell: UITableViewCell {
         addSubview(messageLabel)
         messageLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
         messageLabel.topAnchor.constraint(equalTo: detailTextLabel!.bottomAnchor, constant: 0).isActive = true
-        messageLabel.widthAnchor.constraint(equalTo: textLabel!.widthAnchor).isActive = true
+        messageLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
         messageLabel.heightAnchor.constraint(equalTo: textLabel!.heightAnchor).isActive = true
     
     }

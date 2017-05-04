@@ -13,13 +13,19 @@ import SwiftyJSON
 struct Chat {
     var id: NSNumber?
     var name: String?
-    var user: User?
+    var users: [User] = []
     var last_chat_message : Message?
     
     init(json: JSON) {
         id = json["id"].number
         name = json["name"].string
-        user = User(json: json["users"])
+        
+        let usersJSON = json["users"]
+        for (_, value) in usersJSON {
+            let user = User(json: value)
+            users.append(user)
+        }
+        
         last_chat_message = Message(json: json["last_chat_message"])
         
     }

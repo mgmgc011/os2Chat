@@ -93,10 +93,12 @@ class AccountController: UITableViewController {
     
     func fetchCurrentUser() {
         apiManager.readCurrentUser { (user) -> (Void) in
-            self.currentUser = user
-            DispatchQueue.main.async(execute: {
-                self.tableView.reloadData()
-            })
+            if let fetchedUser = user {
+                self.currentUser = fetchedUser
+                DispatchQueue.main.async(execute: {
+                    self.tableView.reloadData()
+                })
+            }
         }
     }
     

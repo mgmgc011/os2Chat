@@ -131,8 +131,53 @@ class APIManager {
         }
     }
     
+    func listChat(page: NSNumber, limit: NSNumber, completionHandler: @escaping ([Chat]) -> ()) {
+        let headers: HTTPHeaders = contAuthHeader
+        let url = baseUrl.appending("chats?page=\(page)&limit=\(limit)")
+        
+        Alamofire.request(url, method: .get, headers: headers).validate().responseJSON { (response) in
+            
+            if response.result.isSuccess == true {
+                if let value = response.result.value {
+                    let jsonValues = JSON(value)["data"]
+                    var chatLists:[Chat] = []
+
+                    for (_, value) in jsonValues {
+                        let chat = Chat(json: value)
+                        chatLists.append(chat)
+                    }
+                    
+                    completionHandler(chatLists)
+                }
+            }
+        }
+    }
     
-    
+    func createChat(name: String, message: String, completionHandler: @escaping (Bool) -> ()) {
+        let headers: HTTPHeaders = contAuthHeader
+        let paramaters: Parameters = ["name": name, "message": message]
+        
+        
+        Alamofire.request(baseUrl.appending("chats"), method: .post, parameters: paramaters, encoding: URLEncoding.httpBody, headers: headers).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                let jsonValue = JSON(value)
+                if let id = jsonValue["data"]["id"].int {
+                    guard id == 1 else {
+                        completionHandler(false)
+                        return
+                    }
+                    completionHandler(true)
+                    return
+                }
+                completionHandler(false)
+                
+            case .failure:
+                completionHandler(false)
+                
+            }
+        }
+    }
     
     
     
