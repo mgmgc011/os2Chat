@@ -24,7 +24,10 @@ struct Message {
         chat_id = json["chat_id"].number
         user_id = json["user_id"].number
         message = json["message"].string
-        created_at = json["created_at"].string
+        created_at = json["created_at"].string?.convertSinceNow()
+        
+        
+        
         user = User(json: json["user"])
         
         

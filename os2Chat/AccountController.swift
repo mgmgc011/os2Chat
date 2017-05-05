@@ -25,7 +25,10 @@ class AccountController: UITableViewController {
     var confirmText: String?
     
     let apiManager = APIManager.sharedInstance
-    var currentUser: User?
+    
+    var currentUser: User? 
+
+    
     
     lazy var saveButton: UIButton = {
         let button = UIButton(type: .system)
@@ -53,7 +56,6 @@ class AccountController: UITableViewController {
         super.viewDidLoad()
         navigationItem.title = "OraChat"
         
-        fetchCurrentUser()
         tableView.register(AccountCell.self, forCellReuseIdentifier: cellId)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveButton)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logoutButton)
@@ -90,18 +92,7 @@ class AccountController: UITableViewController {
         return registerLabels.count
     }
     
-    
-    func fetchCurrentUser() {
-        apiManager.readCurrentUser { (user) -> (Void) in
-            if let fetchedUser = user {
-                self.currentUser = fetchedUser
-                DispatchQueue.main.async(execute: {
-                    self.tableView.reloadData()
-                })
-            }
-        }
-    }
-    
+
     func syncInputText() {
         nameText = nameTF?.text
         emailText = emailTF?.text

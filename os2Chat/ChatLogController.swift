@@ -15,10 +15,11 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
     
     let cellId = "cellId"
     
-    var message: Message?
-    
-    let messages = ["Hi", "This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice", "This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice, This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice", "This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice, This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz niceThis is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice, This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz niceThis is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice, This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz niceThis is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice, This is a very long text for manual testing cases so, lets see if i know the alphabet abcdefghijklmnopqrstuvwxyz nice"]
-    
+    let apiManager = APIManager.sharedInstance
+    var seguedMessage: Message?
+    var loadedMessages = [Message]()
+    var currentUser: User?
+    var seguedTitle: String?
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -54,14 +55,14 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
         let height = self.view.frame.height * 0.5
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         let popUp = PopUpView(frame: frame, actionButtonTitle: "Send", labelText: "Send A Message", parentViewController: 2)
-//        let popUp = PopUpView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        //        let popUp = PopUpView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         let navbarY = self.navigationController?.navigationBar.frame.height
         let tabbarY = self.tabBarController?.tabBar.frame.height
         let x = self.view.center.x
         let y = self.view.center.y - navbarY! - tabbarY!
         popUp.center.x = x
         popUp.center.y = y
-
+        popUp.chatLogController = self
         return popUp
     }()
     
@@ -69,7 +70,10 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        loadMessages()
         collectionView.register(ChatLogCollectionCell.self, forCellWithReuseIdentifier: cellId)
+        navigationItem.title = seguedTitle
         
         view.addSubview(collectionView)
         collectionView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
@@ -84,7 +88,35 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
         addButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
         addButton.addTarget(self, action: #selector(addPopUp), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-
+        
+    }
+    
+    func loadMessages() {
+        
+        if let chatId = seguedMessage?.chat_id {
+            apiManager.listMessages(id: chatId, page: 1, limit: 20) { (messages, error) -> (Void) in
+                if messages != nil, error == nil {
+                    self.loadedMessages = messages!
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.collectionView.reloadData()
+                    })
+                    
+                } else if error != nil {
+                    let errorMessage = error?.localizedDescription
+                    
+                    let retryAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: { (action) in
+                        self.loadMessages()
+                    })
+                    
+                    let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil)
+                    
+                    self.errorAlert("Error Occoured", message: errorMessage!, action: retryAction, action2: cancelAction)
+                }
+            }
+        }
+        
+        
     }
     
     
@@ -96,17 +128,69 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
         view.addSubview(popupView)
     }
     
+    func removePopUP() {
+        popupView.removeFromSuperview()
+    }
+    
+    func sendMesaage() {
+        if let chatId = seguedMessage?.chat_id, let message = popupView.messageTextView.text {
+            apiManager.sendMessage(id: chatId, message: message, completionHandler: { (result, message) in
+                guard result == true else {
+                    
+                    let action = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: { (action) in
+                        self.sendMesaage()
+                    })
+                    let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { (action) in
+                        self.removePopUP()
+                    })
+                    
+                    self.errorAlert("Error Occured", message: message, action: action, action2: cancel)
+                    return
+                }
+                
+                let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: { (action) in
+                    DispatchQueue.main.async(execute: {
+                        self.removePopUP()
+                        self.collectionView.reloadData()
+                    })
+                    
+                })
+                
+                self.errorAlert("Message Sent", message: message, action: action, action2: nil)
+                
+                
+            })
+            
+        }
+    }
+    
+    func setupCell(cell: ChatLogCollectionCell, message: Message) {
+        if currentUser?.id == message.user_id {
+            cell.bubbleViewRightAnchor?.isActive = true
+            cell.bubbleViewLeftAnchor?.isActive = false
+            cell.bubbleView.backgroundColor = UIColor.oraColor()
+        } else {
+            cell.bubbleViewRightAnchor?.isActive = false
+            cell.bubbleViewLeftAnchor?.isActive = true
+            cell.bubbleView.backgroundColor = UIColor.lightGray
+            
+        }
+        
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return messages.count
+        return loadedMessages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ChatLogCollectionCell
-        let text = messages[indexPath.item]
-        
+        let message = loadedMessages[indexPath.item]
+        let text = message.message
         cell.textView.text = text
-        cell.bubbleViewWidthAnchor?.constant = estimatedFrameForText(text: text).width + 32
+        cell.timeNameLabel.text = message.created_at
+        setupCell(cell: cell, message: message)
+        cell.bubbleViewWidthAnchor?.constant = estimatedFrameForText(text: text!).width + 32
         
         return cell
     }
@@ -119,9 +203,10 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
         
         var height: CGFloat = 100
         let width = UIScreen.main.bounds.width
-        let message = messages[indexPath.item]
+        let message = loadedMessages[indexPath.item]
         
-        height = estimatedFrameForText(text: message).height + 50
+        let text = message.message
+        height = estimatedFrameForText(text: text!).height + 50
         
         
         return CGSize(width: width, height: height)
@@ -136,6 +221,17 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
         return rect
     }
     
+    
+    func errorAlert(_ title: String, message: String, action: UIAlertAction, action2: UIAlertAction?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(action)
+        
+        if action2 != nil {
+            alert.addAction(action2!)
+        }
+        
+        present(alert, animated: true, completion: nil)
+    }
     
     
 }

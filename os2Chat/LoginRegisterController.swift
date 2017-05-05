@@ -107,7 +107,7 @@ class LoginRegisterController: UITableViewController, UINavigationControllerDele
         self.actionButton.sizeToFit()
         
         self.tableView.reloadData()
-        
+
     }
     
     

@@ -18,7 +18,6 @@
 		7B4DE7A31E9EF54C009CE2BF /* ChatListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DE7A21E9EF54C009CE2BF /* ChatListTableView.swift */; };
 		7B4DE7A51EA18014009CE2BF /* AddButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DE7A41EA18014009CE2BF /* AddButtonView.swift */; };
 		7B4DE7A71EA2B624009CE2BF /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DE7A61EA2B624009CE2BF /* ChatLogController.swift */; };
-		7B4DE7A91EA2BB6E009CE2BF /* ChatLogCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4DE7A81EA2BB6E009CE2BF /* ChatLogCollectionView.swift */; };
 		7BC54EA21EA96F850084A42F /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC54EA11EA96F850084A42F /* PopUpView.swift */; };
 		7BC54EA41EADED3C0084A42F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC54EA31EADED3C0084A42F /* APIManager.swift */; };
 		7BC54EA61EB2FE460084A42F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC54EA51EB2FE460084A42F /* User.swift */; };
@@ -60,7 +59,6 @@
 		7B4DE7A21E9EF54C009CE2BF /* ChatListTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatListTableView.swift; path = os2Chat/ChatListTableView.swift; sourceTree = "<group>"; };
 		7B4DE7A41EA18014009CE2BF /* AddButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddButtonView.swift; path = os2Chat/AddButtonView.swift; sourceTree = "<group>"; };
 		7B4DE7A61EA2B624009CE2BF /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
-		7B4DE7A81EA2BB6E009CE2BF /* ChatLogCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatLogCollectionView.swift; path = os2Chat/ChatLogCollectionView.swift; sourceTree = "<group>"; };
 		7BC54EA11EA96F850084A42F /* PopUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopUpView.swift; path = os2Chat/PopUpView.swift; sourceTree = "<group>"; };
 		7BC54EA31EADED3C0084A42F /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIManager.swift; path = os2Chat/APIManager.swift; sourceTree = "<group>"; };
 		7BC54EA51EB2FE460084A42F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = os2Chat/User.swift; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 				7B4DE7A21E9EF54C009CE2BF /* ChatListTableView.swift */,
 				7BC54EA11EA96F850084A42F /* PopUpView.swift */,
 				7B4DE7A41EA18014009CE2BF /* AddButtonView.swift */,
-				7B4DE7A81EA2BB6E009CE2BF /* ChatLogCollectionView.swift */,
 			);
 			name = View;
 			path = ..;
@@ -407,7 +404,6 @@
 				7BEEF4831E9CAA3900580B18 /* ChatLogCollectionCell.swift in Sources */,
 				7B4DE7A31E9EF54C009CE2BF /* ChatListTableView.swift in Sources */,
 				7B1E7F1D1EB7E349005A7822 /* Message.swift in Sources */,
-				7B4DE7A91EA2BB6E009CE2BF /* ChatLogCollectionView.swift in Sources */,
 				7B2A1A2F1E9C251F00173E87 /* LoginRegisterController.swift in Sources */,
 				7B1E7F1B1EB7E2C0005A7822 /* Chat.swift in Sources */,
 				7BC54EA21EA96F850084A42F /* PopUpView.swift in Sources */,

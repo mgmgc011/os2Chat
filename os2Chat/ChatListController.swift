@@ -15,6 +15,15 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     
     let apiManager = APIManager.sharedInstance
     var chats: [Chat] = []
+    var currentUser: User? {
+        didSet {
+            let navController = self.tabBarController?.viewControllers?[1] as! UINavigationController
+            let vc = navController.topViewController as! AccountController
+            vc.currentUser = self.currentUser
+        }
+    }
+    
+    
     
     lazy var tableView : UITableView = {
         let tableView = UITableView()
@@ -59,6 +68,7 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         
         fetchChatList()
+        fetchCurrentUser()
         
         navigationItem.title = "OraChat"
         navigationController?.navigationBar.barTintColor = .white
@@ -84,6 +94,14 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
+    func fetchCurrentUser() {
+        apiManager.readCurrentUser { (user) -> (Void) in
+            if let fetchedUser = user {
+                self.currentUser = fetchedUser
+            }
+        }
+    }
+    
     func fetchChatList() {
         apiManager.listChat(page: 1, limit: 50) { (chats) in
             self.chats = chats
@@ -95,11 +113,7 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     
     func addPopUp() {
         view.addSubview(popupView)
-        
     }
-    
-    
-    
     
     func removePopUp() {
         popupView.removeFromSuperview()
@@ -144,7 +158,7 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
         let chat = chats[indexPath.row]
         
         cell.textLabel?.text = chat.name
-        let formattedTime = chat.last_chat_message?.created_at?.convertSinceNow()
+        let formattedTime = chat.last_chat_message?.created_at
         let fromAndName = "From:\(chat.users.first!.name!), \(formattedTime!)"
         cell.detailTextLabel?.text = fromAndName
         cell.messageLabel.text = chat.last_chat_message?.message
@@ -161,7 +175,9 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let chatLogController = ChatLogController()
-        chatLogController.message = chats[indexPath.row].last_chat_message
+        chatLogController.currentUser = self.currentUser
+        chatLogController.seguedMessage = chats[indexPath.row].last_chat_message
+        chatLogController.seguedTitle = chats[indexPath.row].name
         self.navigationController?.pushViewController(chatLogController, animated: true)
         
     }

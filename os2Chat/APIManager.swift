@@ -157,7 +157,6 @@ class APIManager {
         let headers: HTTPHeaders = contAuthHeader
         let paramaters: Parameters = ["name": name, "message": message]
         
-        
         Alamofire.request(baseUrl.appending("chats"), method: .post, parameters: paramaters, encoding: URLEncoding.httpBody, headers: headers).validate().responseJSON { (response) in
             switch response.result {
             case .success(let value):
@@ -179,7 +178,56 @@ class APIManager {
         }
     }
     
+    func listMessages(id: NSNumber, page: NSNumber, limit: NSNumber, completionHandler: @escaping ([Message]?, Error?) -> ()) {
+        let headers : HTTPHeaders = contAuthHeader
+        let url = baseUrl.appending("chats/\(id)/chat_messages?page=\(page)&limit=\(limit)")
+        
+        Alamofire.request(url, method: .get, headers: headers).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                let jsonValues = JSON(value)["data"]
+                var messageLists:[Message] = []
+                
+                for (_, value) in jsonValues {
+                    let message = Message(json: value)
+                    messageLists.append(message)
+                }
+                
+                completionHandler(messageLists, nil)
+            case .failure(let error):
+                completionHandler(nil, error)
+                
+            }
+        }
+    }
     
+    func sendMessage(id: NSNumber, message: String, completionHandler: @escaping (Bool, String) -> ()) {
+        let headers : HTTPHeaders = contAuthHeader
+        let url = baseUrl.appending("chats/\(id)/chat_messages")
+        let parameters = ["message": message]
+        
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers: headers).responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                let value = JSON(value)["data"]["message"].string
+//                if value == message {
+                if value != nil {
+                    completionHandler(true, "Message Sent")
+                } else {
+                    completionHandler(false, "Something Went Wrong")
+
+                }
+                
+            case .failure(let error):
+                let error = error.localizedDescription
+                
+                completionHandler(false, error)
+            }
+        }
+        
+        
+        
+    }
     
     
 }

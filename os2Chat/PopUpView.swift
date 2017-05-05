@@ -22,8 +22,9 @@ class PopUpView: UIView {
     
     var chatLogController: ChatLogController? {
         didSet {
+            cancelButton.addTarget(chatLogController, action: #selector(ChatLogController.removePopUP), for: .touchUpInside)
             
-            
+            createButton.addTarget(chatLogController, action: #selector(ChatLogController.sendMesaage), for: .touchUpInside)
         }
     }
     
@@ -105,10 +106,11 @@ class PopUpView: UIView {
             
         } else if parentViewController == 2 {
             handleChatMessageChange(topAnchor: titleLabel.bottomAnchor)
-            
         }
-        
-        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     
@@ -151,9 +153,7 @@ class PopUpView: UIView {
     }
     
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    
     
     
     
