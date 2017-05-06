@@ -21,10 +21,9 @@ class APIManager {
     
     
     func register(name: String, email: String, pw: String, confirmPw: String, completion: @escaping (Bool, String) -> ()) {
-        let headers: HTTPHeaders = contentType
         let paramters = ["name": name, "email": email, "password":pw, "confirm": confirmPw]
         
-        Alamofire.request(baseUrl.appending("users"), method: .post, parameters: paramters, encoding: URLEncoding.httpBody, headers: headers).validate().responseJSON { (response) in
+        Alamofire.request(baseUrl.appending("users"), method: .post, parameters: paramters, encoding: URLEncoding.httpBody, headers: contentType).validate().responseJSON { (response) in
             switch response.result {
             case .success(let value):
                 let jsonValue = JSON(value)
@@ -47,10 +46,9 @@ class APIManager {
     
     
     func login(email: String, pw: String, completion: @escaping (Bool, String) -> ()) {
-        let headers: HTTPHeaders = contentType
         let parameters = ["email": email, "password": pw]
         
-        Alamofire.request(baseUrl.appending("auth/login"), method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers: headers).validate().responseJSON { (response) in
+        Alamofire.request(baseUrl.appending("auth/login"), method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers: contentType).validate().responseJSON { (response) in
             switch response.result {
             case .success(let value):
                 let jsonValue = JSON(value)
@@ -75,9 +73,8 @@ class APIManager {
     
     
     func logout(completion: @escaping (Bool) -> ()) {
-        let headers: HTTPHeaders = contAuthHeader
         
-        Alamofire.request(baseUrl.appending("auth/logout"), method: .get, headers: headers).responseData { (response) in
+        Alamofire.request(baseUrl.appending("auth/logout"), method: .get, headers: contAuthHeader).responseData { (response) in
             switch response.result {
             case .success:
                 completion(true)
@@ -91,9 +88,8 @@ class APIManager {
     
     
     func readCurrentUser(completion: @escaping (User?) -> (Void)) {
-        let headers: HTTPHeaders = contAuthHeader
         
-        Alamofire.request(baseUrl.appending("users/current"), method: .get, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+        Alamofire.request(baseUrl.appending("users/current"), method: .get, encoding: JSONEncoding.default, headers: contAuthHeader).responseJSON { (response) in
             switch response.result {
             case .success(let value):
                 let value = JSON(value)
@@ -107,10 +103,9 @@ class APIManager {
     }
     
     func updateCurrentUser(name: String, email: String, pw: String, confirmPw: String, completion: @escaping (Bool, String) -> ()) {
-        let headers: HTTPHeaders = contentType
         let paramters = ["name": name, "email": email, "password":pw, "confirm": confirmPw]
         
-        Alamofire.request(baseUrl.appending("users/current"), method: .patch, parameters: paramters, encoding: URLEncoding.httpBody, headers: headers).validate().responseJSON { (response) in
+        Alamofire.request(baseUrl.appending("users/current"), method: .patch, parameters: paramters, encoding: URLEncoding.httpBody, headers: contentType).validate().responseJSON { (response) in
             switch response.result {
             case .success(let value):
                 let jsonValue = JSON(value)
@@ -132,16 +127,15 @@ class APIManager {
     }
     
     func listChat(page: NSNumber, limit: NSNumber, completionHandler: @escaping ([Chat]) -> ()) {
-        let headers: HTTPHeaders = contAuthHeader
         let url = baseUrl.appending("chats?page=\(page)&limit=\(limit)")
         
-        Alamofire.request(url, method: .get, headers: headers).validate().responseJSON { (response) in
+        Alamofire.request(url, method: .get, headers: contAuthHeader).validate().responseJSON { (response) in
             
             if response.result.isSuccess == true {
                 if let value = response.result.value {
                     let jsonValues = JSON(value)["data"]
                     var chatLists:[Chat] = []
-
+                    
                     for (_, value) in jsonValues {
                         let chat = Chat(json: value)
                         chatLists.append(chat)
@@ -154,10 +148,9 @@ class APIManager {
     }
     
     func createChat(name: String, message: String, completionHandler: @escaping (Bool) -> ()) {
-        let headers: HTTPHeaders = contAuthHeader
         let paramaters: Parameters = ["name": name, "message": message]
         
-        Alamofire.request(baseUrl.appending("chats"), method: .post, parameters: paramaters, encoding: URLEncoding.httpBody, headers: headers).validate().responseJSON { (response) in
+        Alamofire.request(baseUrl.appending("chats"), method: .post, parameters: paramaters, encoding: URLEncoding.httpBody, headers: contAuthHeader).validate().responseJSON { (response) in
             switch response.result {
             case .success(let value):
                 let jsonValue = JSON(value)
@@ -178,11 +171,34 @@ class APIManager {
         }
     }
     
+    func updateChat(id: NSNumber, name: String, completionHandler: @escaping (Bool) -> ()) {
+        let url = baseUrl.appending("chats/\(id)")
+        let paramters = ["name": name]
+        
+        Alamofire.request(url, method: .patch, parameters: paramters, encoding: URLEncoding.httpBody, headers: contAuthHeader).responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                let value = JSON(value)["data"]["name"].string
+                //                if value == name {
+                if value != nil {
+                    completionHandler(true)
+                } else {
+                    completionHandler(false)
+                }
+                
+            case .failure:
+                
+                completionHandler(false)
+            }
+        }
+        
+    }
+    
+    
     func listMessages(id: NSNumber, page: NSNumber, limit: NSNumber, completionHandler: @escaping ([Message]?, Error?) -> ()) {
-        let headers : HTTPHeaders = contAuthHeader
         let url = baseUrl.appending("chats/\(id)/chat_messages?page=\(page)&limit=\(limit)")
         
-        Alamofire.request(url, method: .get, headers: headers).validate().responseJSON { (response) in
+        Alamofire.request(url, method: .get, headers: contAuthHeader).validate().responseJSON { (response) in
             switch response.result {
             case .success(let value):
                 let jsonValues = JSON(value)["data"]
@@ -206,16 +222,16 @@ class APIManager {
         let url = baseUrl.appending("chats/\(id)/chat_messages")
         let parameters = ["message": message]
         
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers: headers).responseJSON { (response) in
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: URLEncoding.httpBody, headers: contAuthHeader).responseJSON { (response) in
             switch response.result {
             case .success(let value):
                 let value = JSON(value)["data"]["message"].string
-//                if value == message {
+                //                if value == message {
                 if value != nil {
                     completionHandler(true, "Message Sent")
                 } else {
                     completionHandler(false, "Something Went Wrong")
-
+                    
                 }
                 
             case .failure(let error):

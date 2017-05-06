@@ -14,7 +14,9 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     let headerId = "headerId"
     
     let apiManager = APIManager.sharedInstance
+    
     var chats: [Chat] = []
+    
     var currentUser: User? {
         didSet {
             let navController = self.tabBarController?.viewControllers?[1] as! UINavigationController
@@ -22,7 +24,6 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
             vc.currentUser = self.currentUser
         }
     }
-    
     
     
     lazy var tableView : UITableView = {
@@ -52,15 +53,20 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
         let height = self.view.frame.height * 0.5
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         let popUp = PopUpView(frame: frame, actionButtonTitle: "Create", labelText: "Create A Chat", parentViewController: 1)
-        let navbarY = self.navigationController?.navigationBar.frame.height
-        let tabbarY = self.tabBarController?.tabBar.frame.height
-        let x = self.view.center.x
-        let y = self.view.center.y - navbarY! - tabbarY!
-        popUp.center.x = x
-        popUp.center.y = y
+        popUp.center = self.view.center
         popUp.chatListController = self
         return popUp
     }()
+    
+    
+    lazy var editView : EditView = {
+        let editV = Bundle.main.loadNibNamed("EditXib", owner: self, options: nil)!.first as! EditView
+        editV.center = self.view.center
+        editV.updateButton.addTarget(self, action: #selector(self.editChat), for: .touchUpInside)
+        editV.cancelButton.addTarget(self, action: #selector(self.removeEditView), for: .touchUpInside)
+        return editV
+    }()
+    
     
     
     
@@ -113,25 +119,59 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     
     func addPopUp() {
         view.addSubview(popupView)
+        let navbarY = self.navigationController?.navigationBar.frame.height
+        let tabbarY = self.tabBarController?.tabBar.frame.height
+        let x = self.view.center.x
+        let y = self.view.center.y - navbarY! - tabbarY!
+        popupView.center.x = x
+        popupView.center.y = y
+    }
+    
+    func addEditView(indexPath: IndexPath) {
+        editView.titleTextField.text = chats[indexPath.row].name
+        editView.receivedIndexPath = indexPath
+        self.view.addSubview(editView)
     }
     
     func removePopUp() {
         popupView.removeFromSuperview()
     }
     
+    func removeEditView() {
+        editView.removeFromSuperview()
+    }
+    
     func createChat() {
         apiManager.createChat(name: popupView.titleTextField.text!, message: popupView.messageTextView.text) { (result) in
             if result == true {
-                
                 let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: { (action) in
                     self.tableView.reloadData()
                     self.removePopUp()
-                    
                 })
-                self.errorAlert("Created", message: "Yep", action: action)
+                self.errorAlert("Created", message: "Nice", action: action)
+                
             } else {
                 let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil)
                 self.errorAlert("Error", message: "Something went wrong!", action: action)
+            }
+        }
+    }
+    
+    func editChat() {
+        if let id = chats[editView.receivedIndexPath!.row].id, let text = editView.titleTextField.text {
+            apiManager.updateChat(id: id, name: text) { (result) in
+                if result == true {
+                    let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: { (action) in
+                        self.tableView.reloadData()
+                        self.removeEditView()
+                    })
+                    self.errorAlert("Edited", message: "Nice", action: action)
+                    
+                } else {
+                    let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil)
+                    self.errorAlert("Error", message: "Something went wrong!", action: action)
+                    
+                }
             }
         }
     }
@@ -182,14 +222,11 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    
     func errorAlert(_ title: String, message: String, action: UIAlertAction) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
-    
-    
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -197,7 +234,7 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let edit = UITableViewRowAction(style: .normal, title: "Edit") { (action, index) in
-            print("Edit pressed")
+            self.addEditView(indexPath: indexPath)
         }
         
         edit.backgroundColor = UIColor.oraColor()

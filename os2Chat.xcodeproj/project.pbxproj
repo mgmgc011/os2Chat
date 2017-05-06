@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7B1E7F1B1EB7E2C0005A7822 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1E7F1A1EB7E2C0005A7822 /* Chat.swift */; };
 		7B1E7F1D1EB7E349005A7822 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1E7F1C1EB7E349005A7822 /* Message.swift */; };
+		7B1E7F211EBDB0B8005A7822 /* EditXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B1E7F201EBDB0B8005A7822 /* EditXib.xib */; };
+		7B1E7F231EBDB232005A7822 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1E7F221EBDB232005A7822 /* EditView.swift */; };
 		7B2A1A2D1E9C251F00173E87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A1A2C1E9C251F00173E87 /* AppDelegate.swift */; };
 		7B2A1A2F1E9C251F00173E87 /* LoginRegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2A1A2E1E9C251F00173E87 /* LoginRegisterController.swift */; };
 		7B2A1A321E9C251F00173E87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B2A1A301E9C251F00173E87 /* Main.storyboard */; };
@@ -46,6 +48,8 @@
 		3F15C9D4C63D7C3BE0AB551E /* Pods-os2Chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-os2Chat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-os2Chat/Pods-os2Chat.debug.xcconfig"; sourceTree = "<group>"; };
 		7B1E7F1A1EB7E2C0005A7822 /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Chat.swift; path = os2Chat/Chat.swift; sourceTree = "<group>"; };
 		7B1E7F1C1EB7E349005A7822 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Message.swift; path = os2Chat/Message.swift; sourceTree = "<group>"; };
+		7B1E7F201EBDB0B8005A7822 /* EditXib.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditXib.xib; sourceTree = "<group>"; };
+		7B1E7F221EBDB232005A7822 /* EditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditView.swift; path = os2Chat/EditView.swift; sourceTree = "<group>"; };
 		7B2A1A291E9C251F00173E87 /* os2Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = os2Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B2A1A2C1E9C251F00173E87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B2A1A2E1E9C251F00173E87 /* LoginRegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterController.swift; sourceTree = "<group>"; };
@@ -154,6 +158,8 @@
 		7B2A1A4D1E9C2A0800173E87 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7B1E7F201EBDB0B8005A7822 /* EditXib.xib */,
+				7B1E7F221EBDB232005A7822 /* EditView.swift */,
 				7BEEF47A1E9C544600580B18 /* LoginRegisterCell.swift */,
 				7BEEF4821E9CAA3900580B18 /* ChatLogCollectionCell.swift */,
 				7B4DE7A21E9EF54C009CE2BF /* ChatListTableView.swift */,
@@ -288,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B2A1A371E9C251F00173E87 /* LaunchScreen.storyboard in Resources */,
+				7B1E7F211EBDB0B8005A7822 /* EditXib.xib in Resources */,
 				7B2A1A341E9C251F00173E87 /* Assets.xcassets in Resources */,
 				7B2A1A321E9C251F00173E87 /* Main.storyboard in Resources */,
 			);
@@ -401,6 +408,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BEEF4811E9CA2C900580B18 /* AccountController.swift in Sources */,
+				7B1E7F231EBDB232005A7822 /* EditView.swift in Sources */,
 				7BEEF4831E9CAA3900580B18 /* ChatLogCollectionCell.swift in Sources */,
 				7B4DE7A31E9EF54C009CE2BF /* ChatListTableView.swift in Sources */,
 				7B1E7F1D1EB7E349005A7822 /* Message.swift in Sources */,
