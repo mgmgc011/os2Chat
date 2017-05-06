@@ -16,7 +16,7 @@ struct Message {
     var chat_id: NSNumber?
     var user_id: NSNumber?
     var message: String?
-    var created_at: String?
+    var created_at: Int?
     var user: User?
     
     init(json: JSON) {
@@ -24,10 +24,8 @@ struct Message {
         chat_id = json["chat_id"].number
         user_id = json["user_id"].number
         message = json["message"].string
-        created_at = json["created_at"].string?.convertSinceNow()
-        
-        
-        
+        created_at = json["created_at"].string?.convertToSeconds()
+    
         user = User(json: json["user"])
         
         

@@ -104,19 +104,15 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
                     
                 } else if error != nil {
                     let errorMessage = error?.localizedDescription
-                    
                     let retryAction = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: { (action) in
                         self.loadMessages()
                     })
-                    
                     let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil)
                     
                     self.errorAlert("Error Occoured", message: errorMessage!, action: retryAction, action2: cancelAction)
                 }
             }
         }
-        
-        
     }
     
     
@@ -136,7 +132,6 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
         if let chatId = seguedMessage?.chat_id, let message = popupView.messageTextView.text {
             apiManager.sendMessage(id: chatId, message: message, completionHandler: { (result, message) in
                 guard result == true else {
-                    
                     let action = UIAlertAction(title: "Try Again", style: UIAlertActionStyle.default, handler: { (action) in
                         self.sendMesaage()
                     })
@@ -153,14 +148,9 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
                         self.removePopUP()
                         self.collectionView.reloadData()
                     })
-                    
                 })
-                
                 self.errorAlert("Message Sent", message: message, action: action, action2: nil)
-                
-                
             })
-            
         }
     }
     
@@ -173,9 +163,7 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
             cell.bubbleViewRightAnchor?.isActive = false
             cell.bubbleViewLeftAnchor?.isActive = true
             cell.bubbleView.backgroundColor = UIColor.lightGray
-            
         }
-        
     }
     
     
@@ -188,9 +176,9 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
         let message = loadedMessages[indexPath.item]
         let text = message.message
         cell.textView.text = text
-        cell.timeNameLabel.text = message.created_at
+        cell.timeNameLabel.text = message.created_at?.converToString()
         setupCell(cell: cell, message: message)
-        cell.bubbleViewWidthAnchor?.constant = estimatedFrameForText(text: text!).width + 32
+        cell.bubbleViewWidthAnchor?.constant = estimateFrameForText(text: text!).width + 32
         
         return cell
     }
@@ -204,15 +192,13 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
         var height: CGFloat = 100
         let width = UIScreen.main.bounds.width
         let message = loadedMessages[indexPath.item]
-        
         let text = message.message
-        height = estimatedFrameForText(text: text!).height + 50
-        
-        
+        height = estimateFrameForText(text: text!).height + 50
+    
         return CGSize(width: width, height: height)
     }
     
-    private func estimatedFrameForText(text: String) -> CGRect {
+    func estimateFrameForText(text: String) -> CGRect {
         let size = CGSize(width: 250, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 16)]

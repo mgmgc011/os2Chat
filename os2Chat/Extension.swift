@@ -23,10 +23,10 @@ extension UIColor {
 
 }
 
-extension String {
+extension Int {
     
-    func convertSinceNow() -> String {
-
+    func converToString() -> String {
+        
         let secPerMin = 60
         let secPerHour = 3600
         let secPerDay = 86400
@@ -34,37 +34,47 @@ extension String {
         let secPerMonth = 2419200
         let secPerYear = 31536000
         
-        let formmater = ISO8601DateFormatter().date(from: self)
-        let interval = Int(formmater!.timeIntervalSinceNow) * -1
-        
-        if interval < secPerMin {
+        if self < secPerMin {
             print("just now")
             return "just now"
             
-        } else if interval < secPerHour {
-            print("\(interval/secPerMin) mins ago")
-            return "\(interval/secPerMin) mins ago"
+        } else if self < secPerHour {
+            print("\(self/secPerMin) mins ago")
+            return "\(self/secPerMin) mins ago"
             
-        } else if interval < secPerDay {
-            print("\(interval/secPerHour) hours ago")
-            return "\(interval/secPerHour) hours ago"
+        } else if self < secPerDay {
+            print("\(self/secPerHour) hours ago")
+            return "\(self/secPerHour) hours ago"
             
-        } else if interval < secPerWeek {
-            print("\(interval/secPerDay) days ago")
-            return "\(interval/secPerDay) days ago"
+        } else if self < secPerWeek {
+            print("\(self/secPerDay) days ago")
+            return "\(self/secPerDay) days ago"
             
-        } else if interval < secPerMonth {
-            print("\(interval/secPerWeek) weeks ago")
-            return "\(interval/secPerWeek) weeks ago"
+        } else if self < secPerMonth {
+            print("\(self/secPerWeek) weeks ago")
+            return "\(self/secPerWeek) weeks ago"
             
-        } else if interval < secPerYear {
-            print("\(interval/secPerMonth) months ago")
-            return "\(interval/secPerMonth) months ago"
+        } else if self < secPerYear {
+            print("\(self/secPerMonth) months ago")
+            return "\(self/secPerMonth) months ago"
             
         } else {
-            print("\(interval/secPerYear) years ago")
-            return "\(interval/secPerYear) years ago"
+            print("\(self/secPerYear) years ago")
+            return "\(self/secPerYear) years ago"
         }
+    }
+    
+}
+
+extension String {
+
+    func convertToSeconds() -> Int {
+        
+        let formmater = ISO8601DateFormatter().date(from: self)
+        let interval = Int(formmater!.timeIntervalSinceNow) * -1
+        
+        print(interval)
+        return interval
     }
 }
 
