@@ -75,6 +75,7 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
         
         fetchChatList()
         fetchCurrentUser()
+        setUpKeyBoardObservers()
         
         navigationItem.title = "OraChat"
         navigationController?.navigationBar.barTintColor = .white
@@ -99,6 +100,35 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
         addButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
+    func setUpKeyBoardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyBoardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyBoardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func handleKeyBoardWillShow(notification: Notification) {
+        let keyboardDuration = (notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue
+        UIView.animate(withDuration: keyboardDuration!) {
+            let navbarY = self.navigationController?.navigationBar.frame.height
+            let tabbarY = self.tabBarController?.tabBar.frame.height
+            let x = self.view.center.x
+            let y = self.view.center.y - navbarY! - tabbarY!
+            self.popupView.center.x = x
+            self.popupView.center.y = y
+        }
+    }
+    
+    func handleKeyBoardWillHide(notification: Notification) {
+        let keyboardDuration = (notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue
+        UIView.animate(withDuration: keyboardDuration!) {
+//            let navbarY = self.navigationController?.navigationBar.frame.height
+//            let tabbarY = self.tabBarController?.tabBar.frame.height
+//            let x = self.view.center.x
+//            let y = self.view.center.y - navbarY! - tabbarY!
+//            self.popupView.center.x = x
+//            self.popupView.center.y = y
+            self.popupView.center = self.view.center
+        }
+    }
     
     func fetchCurrentUser() {
         apiManager.readCurrentUser { (user) -> (Void) in
@@ -119,12 +149,7 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     
     func addPopUp() {
         view.addSubview(popupView)
-        let navbarY = self.navigationController?.navigationBar.frame.height
-        let tabbarY = self.tabBarController?.tabBar.frame.height
-        let x = self.view.center.x
-        let y = self.view.center.y - navbarY! - tabbarY!
-        popupView.center.x = x
-        popupView.center.y = y
+        
     }
     
     func addEditView(indexPath: IndexPath) {
@@ -241,6 +266,8 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
         
         return [edit]
     }
+    
+    
     
 }
 
