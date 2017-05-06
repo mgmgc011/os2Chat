@@ -55,7 +55,6 @@ class ChatLogController: UIViewController, UICollectionViewDelegate, UICollectio
         let height = self.view.frame.height * 0.5
         let frame = CGRect(x: 0, y: 0, width: width, height: height)
         let popUp = PopUpView(frame: frame, actionButtonTitle: "Send", labelText: "Send A Message", parentViewController: 2)
-        //        let popUp = PopUpView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         let navbarY = self.navigationController?.navigationBar.frame.height
         let tabbarY = self.tabBarController?.tabBar.frame.height
         let x = self.view.center.x

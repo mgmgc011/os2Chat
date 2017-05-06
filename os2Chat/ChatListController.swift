@@ -16,6 +16,9 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     let apiManager = APIManager.sharedInstance
     
     var chats: [Chat] = []
+    var chatWithSections = Dictionary<Int, Array<Chat>>()
+    var sections = [Int]()
+    
     
     var currentUser: User? {
         didSet {
@@ -94,7 +97,10 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
         addButton.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -12).isActive = true
         addButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         addButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+    
     }
+    
+
     
     func setUpKeyBoardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyBoardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -134,6 +140,17 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
             DispatchQueue.main.async(execute: {
                 self.tableView.reloadData()
             })
+            self.sortChatsByTime()
+        }
+    }
+    
+    func sortChatsByTime() {
+        for chat in chats {
+            let time = chat.last_chat_message!.created_at!
+            
+            self.chatWithSections[time] = [chat]
+            
+            self.sections = self.chatWithSections.keys.sorted()
         }
     }
     
@@ -173,7 +190,7 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     
     func editChat() {
         let chat = chats[editView.receivedIndexPath!.row]
-    
+        
         if let id = chat.id, let text = editView.titleTextField.text {
             apiManager.updateChat(id: id, name: text) { (result) in
                 if result == true {
@@ -203,31 +220,33 @@ class ChatListController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chats.count
+        return chatWithSections[sections[section]]!.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return chats.count
+        return chatWithSections.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ChatListCell
-        let chat = chats[indexPath.row]
         
-        cell.textLabel?.text = chat.name
-        let formattedTime = chat.last_chat_message?.created_at?.converToString()
-        let fromAndName = "From:\(chat.users.first!.name!), \(formattedTime!)"
+        let tableSection = chatWithSections[sections[indexPath.section]]
+        let tableItem = tableSection![indexPath.row]
+        
+        cell.textLabel?.text = tableItem.name
+        let formattedTime = tableItem.last_chat_message?.created_at?.converToString()
+        let fromAndName = "From:\(tableItem.users.first!.name!), \(formattedTime!)"
         cell.detailTextLabel?.text = fromAndName
-        cell.messageLabel.text = chat.last_chat_message?.message
+        cell.messageLabel.text = tableItem.last_chat_message?.message
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerId)
-        header?.textLabel?.text = "Today"
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let headers = sections[section].converToString()
         
-        return header
+        return headers
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
